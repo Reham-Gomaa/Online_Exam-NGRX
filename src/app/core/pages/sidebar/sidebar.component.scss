@@ -1,0 +1,19 @@
+$history: #696F79;
+
+.history{
+    color:$history;
+}
+
+.span{
+    @apply font-semibold text-xl align-middle;
+}
+.side-button-style{
+    @apply h-[2.875rem] p-2 grid gap-8 relative;
+}
+
+.img-style{
+    @apply w-6 h-6 absolute top-[.6875rem] start-[.6875rem];
+}
+.bBorder{
+    border-bottom: 1px solid #DBDADE
+}

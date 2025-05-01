@@ -1,0 +1,23 @@
+$history: #696F79;
+
+.history{
+    color:$history;
+}
+
+.btnspan{
+    @apply font-semibold lg:text-xl align-middle;
+}
+
+::placeholder{
+    position: absolute;
+    left: 4.1875rem;
+    top: 1rem;
+}
+
+.user{
+    box-shadow: 0px 15px 40px 5px #EDEDED;
+}
+
+.router{
+    box-shadow: 0px 15px 40px 0px #0000000D;
+}
