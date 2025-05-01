@@ -12,5 +12,5 @@ export let initialState: Payload = {
 
 export const tokenReducer = createReducer(
     initialState,
-    on(assign , (state , action) => state = action.value )
+    on(assign , (state , action) => action.value )
 )
