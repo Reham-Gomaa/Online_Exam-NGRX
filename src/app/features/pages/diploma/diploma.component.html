@@ -22,7 +22,11 @@
         }
     </div>
 
-    <div [class.hidden]="showModal() == false || closeModal() == true"
+    <app-exam-modal-skeleton>
+       
+    </app-exam-modal-skeleton>
+
+    <!-- <div [class.hidden]="showModal() == false || closeModal() == true"
         class="modal h-screen fixed inset-0 z-50 flex justify-center items-center">
         <div [class.hidden]="start() == true"
             class="h-[19.3125rem] bg-white rounded-[1.25rem] myShadow p-6 grid gap-12">
@@ -46,7 +50,7 @@
     @if (examsOnSub.length == 0) {
     <div class="flex justify-center items-center">
         <h1 class="font-semibold">There is no exams available on this subject</h1>
-    </div>
-    }
+    </div> -->
+    } 
 
 </section>

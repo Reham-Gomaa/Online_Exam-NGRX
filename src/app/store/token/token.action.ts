@@ -1,7 +1,7 @@
 import { createAction, props } from "@ngrx/store";
-import { IToken } from "../core/interfaces/itoken";
+import { Payload as TokenPayload } from "../../core/interfaces/itoken"; // Ensure TokenPayload is now correctly exported
 
 export const assign = createAction(
     '[tokenReducer] Assign',
-    props<{value:IToken}>()
+    props<{value:TokenPayload}>()
 )

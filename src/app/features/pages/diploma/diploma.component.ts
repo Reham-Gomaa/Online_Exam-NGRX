@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ExamModalSkeletonComponent } from '../../../shared/components/UI/exam-modal-skeleton/exam-modal-skeleton';
 import { Exam } from '../../interfaces/Exams/iexam-on-subject-res';
 import { ExamsService } from '../../services/Exams/exams.service';
 import { QuestionService } from '../../services/Questions/question.service';
@@ -8,7 +9,7 @@ import { ExamModalComponent } from "../exam-modal/exam-modal.component";
 
 @Component({
   selector: 'app-diploma',
-  imports: [ExamModalComponent],
+  imports: [ExamModalComponent , ExamModalSkeletonComponent],
   templateUrl: './diploma.component.html',
   styleUrls: ['./diploma.component.scss']
 })
@@ -20,25 +21,25 @@ export class DiplomaComponent implements OnInit, OnDestroy {
   closeModal = computed(() => this._QuestionService.closeModal());
   
   examsOnSub !: Exam[];
-  subject_id !: string;
+  subjectId !: string;
   exam_id : WritableSignal<string> = signal('');
   showModal: WritableSignal<boolean> = signal(false);
   start: WritableSignal<boolean> = signal(false);
   examsOnSubjectID !: Subscription;
-  SubjectID !: Subscription;
+  subjectIdSubscription !: Subscription;
 
   ngOnInit(): void {
-    this.SubjectID = this._ActivatedRoute.paramMap.subscribe({
+    this.subjectIdSubscription = this._ActivatedRoute.paramMap.subscribe({
       next: (param) => {
-        this.subject_id = param.get('s_id')!
+        this.subjectId = param.get('s_id')!
       }
     })
 
-    this.getAllExamsOnSubject(this.subject_id);
+    this.getAllExamsOnSubject(this.subjectId);
   }
 
-  getAllExamsOnSubject(s_id: string) {
-    this.examsOnSubjectID = this._ExamsService.getAllExamsOnSubject(s_id).subscribe({
+  getAllExamsOnSubject(subjectId: string) {
+    this.examsOnSubjectID = this._ExamsService.getAllExamsOnSubject(subjectId).subscribe({
       next: (res) => {
         this.examsOnSub = res.exams;
       }
@@ -55,7 +56,7 @@ export class DiplomaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.SubjectID?.unsubscribe();
+    this.subjectIdSubscription?.unsubscribe();
   }
 
 }
