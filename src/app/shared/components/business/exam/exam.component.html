@@ -1,0 +1,57 @@
+
+        <div class="grid gap-[1.6875rem]">
+            <div class="grid gap-[1.6875rem]">
+                <div class="flex justify-between items-center">
+                    <span class="font-medium text-sm/5 tracking-[.0063rem] main-color text-center align-middle">
+                        Question {{currentQuestion.index+1}} of {{numberOfQuestions}}
+                    </span>
+                    <div class="w-[6.125rem] px-1 flex justify-center items-center">
+                        <div class="w-6 h-[1.875rem] align-middle">
+                            <img src="./images/clock.png" alt="clock">
+                        </div>
+                        <!-- <span class="font-normal text-xl/6 tracking-[.0313rem] align-middle text-center"
+                            [class]="minutes > 2 ? 'success-color' : 'text-red-500'">
+                            {{ minutes }} : {{ seconds }}
+                        </span> -->
+                    </div>
+                </div>
+    
+                <div class="flex justify-between items-center">
+                    @for (dot of getRange((numberOfQuestions) ?? 0); track $index) {
+                    <div class="w-[.625rem] h-[.625rem] rounded-full"
+                        [class]="$index <= currentQuestion.index ? 'main-bg': 'dot'"></div>
+                    }
+                </div>
+    
+            </div>
+            <div class="grid gap-6 ">
+                <h3 class="font-medium text-lg md:text-2xl">{{currentQuestion.question}}</h3>
+                <div class="grid gap-4">
+                    <form [formGroup]="quizForm">
+                        @for (answer of currentQuestion.answer; track $index) {
+                            <div class="rounded-[.625rem] mb-4 py-4 px-2 flex flex-nowrap items-center"
+                                [class]="currentQuestion.selectedAnswer == answer.key ? 'bg-blue-100' : 'input-bg'">
+                                <input 
+                                    formControlName="selectedAnswer"
+                                    [id]="currentQuestion.id + $index" type="radio" 
+                                    [value]="answer.key" 
+                                    (change)="onSelectAnswer()"
+                                    [checked]="currentQuestion.selectedAnswer == answer.key"
+                                    class="me-1 w-4 h-4 text-blue-600 border-blue-500 focus:ring-blue-500 cursor-pointer">
+                                <label [for]="currentQuestion.id + $index"
+                                    class="ms-1 font-normal text-sm md:text-xl text-black w-full cursor-pointer">{{answer.answer}}</label>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+            <div class="h-14 grid gap-12 grid-cols-2">
+                <button [disabled]="isBackBtnDisabled" (click)="onBack()" [class]="isBackBtnDisabled ? 'border-gray-400' : 'back'" class="h-14 rounded-full disabled:bg-gray-300 disabled:text-gray-400">Back</button>
+                <button [disabled]="isNextBtnDisabled" (click)="onNext()" [class]="isNextBtnDisabled ? 'bg-gray-300' : 'main-bg'"
+                    class=" h-14 rounded-full text-white disabled:text-gray-400">
+                    @if (currentQuestion.index == numberOfQuestions -1) {Submit}
+                    @else {Next}
+                </button>
+            </div>
+        </div>
+

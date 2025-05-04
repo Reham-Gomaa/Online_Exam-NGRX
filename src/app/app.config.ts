@@ -11,9 +11,14 @@ import { routes } from './app.routes';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { reqHeaderInterceptor } from './core/interceptors/req-header.interceptor';
 import { resErrorInterceptor } from './core/interceptors/res-error.interceptor';
-import { tokenReducer } from './store/token/token.reducer';
 import { Base_Url } from '../../projects/auth-api/src/public-api';
 import { examReducer } from './store/exam/exam-reducer';
+import { questionReducer } from './store/questions/question-reducer';
+import { tokenReducer } from './store/token/token.reducer';
+import { provideEffects } from '@ngrx/effects';
+import { QuestionsEffects } from './store/questions/question-effetc';
+
+
 
 
 export const appConfig: ApplicationConfig = {
@@ -24,8 +29,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch() , withInterceptors([ reqHeaderInterceptor , resErrorInterceptor , loadingInterceptor ])),
     provideStore( {
       'token' : tokenReducer ,
-      'exam' : examReducer
+      'exam' : examReducer ,
+      'question' : questionReducer
     } ),
+    provideEffects(QuestionsEffects),
     importProvidersFrom(BrowserAnimationsModule , NgxSpinnerModule),
     provideToastr(),
     { provide: Base_Url , useValue: `https://exam.elevateegy.com/api/v1` },

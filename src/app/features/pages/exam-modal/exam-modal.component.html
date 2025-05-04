@@ -1,8 +1,8 @@
-<div class="w-[29.375rem] bg-white rounded-[1.25rem] myShadow p-6 grid gap-12"
-    [class]="showScore() == false && score ? 'md:w-[48.5rem]' : 'md:w-[42.875rem]'">
+<!-- <div class="w-[29.375rem] bg-white rounded-[1.25rem] myShadow p-6 grid gap-12"
+    [class]="showScore() == false && score ? 'md:w-[48.5rem]' : 'md:w-[42.875rem]'"> -->
 
         <!-- exam -->
-
+<!-- 
     @if (showScore() == false && !score) {
     @if(questionsOnExam){
     <div class="grid gap-[1.6875rem]">
@@ -58,10 +58,10 @@
         </div>
     </div>
     }
-    }
+    } -->
 
         <!-- score -->
-
+<!-- 
     @if (showScore() == true) {
     @if (score) {
     <h2 class="font-medium text-2xl">Your score</h2>
@@ -96,11 +96,11 @@
     </div>
 
     }
-    }
+    } -->
 
         <!-- results -->
 
-    @if (showScore() == false && score) {
+    <!-- @if (showScore() == false && score) { -->
         <!-- design: 4 questions -->
     <!-- <div class="grid gap-2 md:gap-[1.6875rem] grid-cols-2">
         @for (ques of questionsOnExam.slice(startIndex , startIndex+4); track ques._id) {
@@ -129,7 +129,7 @@
         </div>
         }
     </div> -->
-    
+<!--     
     <div class="grid gap-3 md:gap-2 h-[31.25rem] grid-cols-2 overflow-auto">
         @for (ques of questionsOnExam; track ques._id) {
         <div class="grid md:gap-4">
@@ -156,8 +156,8 @@
             </div>
         </div>
         }
-    </div>
-    <div class="flex justify-between items-center">
+    </div> -->
+    <!-- <div class="flex justify-between items-center"> -->
             <!-- design: 2 buttons for the 4 questions design -->
               <!-- <button (click)="startIndex > 0 ? startIndex = startIndex-4 : 0" id="back"
             class="w-1/4 h-14 rounded-full text-center">Back</button>
@@ -165,9 +165,9 @@
             class="w-1/4 h-14 rounded-full main-bg text-white text-center" >
             Next
         </button> -->
-        <button (click)="close()" id="back"class="w-1/4 h-14 rounded-full text-center block mx-auto">
+        <!-- <button (click)="close()" id="back"class="w-1/4 h-14 rounded-full text-center block mx-auto">
             Close
         </button>
     </div>
     }
-</div>
+</div> -->

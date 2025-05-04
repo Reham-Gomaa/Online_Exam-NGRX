@@ -13,7 +13,7 @@
                     </div>
                     <div class="grid gap-2 col-start-5 place-self-center">
                         <span>{{exam.duration}} Minutes</span>
-                        <button (click)="showInstructions(exam._id)"
+                        <button (click)="toggleModal(exam._id)"
                             class="w-[4.8125rem] h-[1.4375rem] rounded-[.625rem] main-bg text-white">start</button>
                     </div>
                 </div>
@@ -21,36 +21,31 @@
         </div>
         }
     </div>
-
+    @if (isStarted$ |async) {
     <app-exam-modal-skeleton>
-       
-    </app-exam-modal-skeleton>
-
-    <!-- <div [class.hidden]="showModal() == false || closeModal() == true"
-        class="modal h-screen fixed inset-0 z-50 flex justify-center items-center">
-        <div [class.hidden]="start() == true"
-            class="h-[19.3125rem] bg-white rounded-[1.25rem] myShadow p-6 grid gap-12">
-            <div class="h-[10.3125rem] grid gap-4">
-                <h3 class="font-medium text-2xl text-black">Instructions</h3>
-                <div class="grid gap-2 align-middle">
-                    <ul class="font-medium text-xl list-disc li-color p-6">
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                        <li>Lorem ipsum dolor sit amet consectetur.</li>
-                    </ul>
-                </div>
+        @switch (status$ |async) {
+        @case ("instructions") {
+        <div class="grid gap-4">
+            <h3 class="font-medium text-2xl text-black">Instructions</h3>
+            <div class="grid gap-2 align-middle">
+                <ul class="font-medium text-xl list-disc li-color p-6">
+                    <li>Lorem ipsum dolor sit amet consectetur.</li>
+                    <li>Lorem ipsum dolor sit amet consectetur.</li>
+                    <li>Lorem ipsum dolor sit amet consectetur.</li>
+                    <li>Lorem ipsum dolor sit amet consectetur.</li>
+                </ul>
             </div>
             <button type="button" (click)="startExam()"
-                class="text-white main-bg hover:bg-blue-800 font-medium text-base align-middle text-center  h-12 rounded-full">start</button>
+                class="text-white main-bg hover:bg-blue-800 font-medium text-base align-middle text-center  h-12 rounded-full">
+                start</button>
         </div>
-        <app-exam-modal [e_id]="exam_id()" [class.hidden]="start() == false"></app-exam-modal>
-    </div>
+        }
+        @case ("started") { <app-exam></app-exam> }
+        @case ("get score") { <app-exam-score></app-exam-score> }
+        }
+    </app-exam-modal-skeleton>
     }
-    @if (examsOnSub.length == 0) {
-    <div class="flex justify-center items-center">
-        <h1 class="font-semibold">There is no exams available on this subject</h1>
-    </div> -->
-    } 
+
+    }
 
 </section>

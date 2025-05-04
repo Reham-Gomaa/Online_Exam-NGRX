@@ -13,139 +13,139 @@ import { BaseChartDirective } from 'ng2-charts';
   templateUrl: './exam-modal.component.html',
   styleUrls: ['./exam-modal.component.scss']
 })
-export class ExamModalComponent implements OnInit, OnDestroy {
-  private readonly _QuestionService = inject(QuestionService);
-  private readonly platformId = inject(PLATFORM_ID);
-  isBrowser = isPlatformBrowser(this.platformId);
+export class ExamModalComponent {
+  // private readonly _QuestionService = inject(QuestionService);
+  // private readonly platformId = inject(PLATFORM_ID);
+  // isBrowser = isPlatformBrowser(this.platformId);
 
-  e_id: InputSignal<string> = input('');
-  showScore: WritableSignal<boolean> = signal(false);
-  score !: ScoreAdaptorRes;
-  questionsOnExam !: Question[];
-  index: number = 0;
-  startIndex: number = 0;
-  answers: Answer[] = [];
-  duration !: number;
-  time !: number;
-  minutes !: number;
-  seconds: number = 0;
-  allQuestionsOnExamID !: Subscription;
-  checkQuestionsID !: Subscription;
+  // e_id: InputSignal<string> = input('');
+  // showScore: WritableSignal<boolean> = signal(false);
+  // score !: ScoreAdaptorRes;
+  // questionsOnExam !: Question[];
+  // index: number = 0;
+  // startIndex: number = 0;
+  // answers: Answer[] = [];
+  // duration !: number;
+  // time !: number;
+  // minutes !: number;
+  // seconds: number = 0;
+  // allQuestionsOnExamID !: Subscription;
+  // checkQuestionsID !: Subscription;
 
-  doughnutChartData: ChartData<'doughnut'> | undefined;
-  doughnutChartType: ChartType = 'doughnut';
-  doughnutChartOptions: any = {
-    responsive: true,
-    maintainAspectRatio: true
-  };
+  // doughnutChartData: ChartData<'doughnut'> | undefined;
+  // doughnutChartType: ChartType = 'doughnut';
+  // doughnutChartOptions: any = {
+  //   responsive: true,
+  //   maintainAspectRatio: true
+  // };
 
-  constructor() {
-    Chart.register(...registerables);
-  }
+  // constructor() {
+  //   Chart.register(...registerables);
+  // }
 
-  ngOnInit(): void {
-    this.startExam();
+  // ngOnInit(): void {
+  //   this.startExam();
 
-    let intervalId = setInterval(() => {
-      if (this.seconds === 0) {
-        this.minutes = this.minutes - 1;
-        this.seconds = 59;
-      } else {
-        this.seconds = this.seconds - 1;
-      }
-      if (this.minutes === 0) {
-        clearInterval(intervalId);
-        this.submit();
-      }
-    }, 1000)
+  //   let intervalId = setInterval(() => {
+  //     if (this.seconds === 0) {
+  //       this.minutes = this.minutes - 1;
+  //       this.seconds = 59;
+  //     } else {
+  //       this.seconds = this.seconds - 1;
+  //     }
+  //     if (this.minutes === 0) {
+  //       clearInterval(intervalId);
+  //       this.submit();
+  //     }
+  //   }, 1000)
 
-  }
+  // }
 
-  startExam() {
-    this.allQuestionsOnExamID = this._QuestionService.getAllQuestionsOnExam(this.e_id()).subscribe({
-      next: (res) => {
-        this.questionsOnExam = res.questions;
-        this.duration = res.questions[0].exam.duration;
-        this.minutes = res.questions[0].exam.duration;
-      }
-    })
-  }
+  // startExam() {
+  //   this.allQuestionsOnExamID = this._QuestionService.getAllQuestionsOnExam(this.e_id()).subscribe({
+  //     next: (res) => {
+  //       this.questionsOnExam = res.questions;
+  //       this.duration = res.questions[0].exam.duration;
+  //       this.minutes = res.questions[0].exam.duration;
+  //     }
+  //   })
+  // }
 
-  selectAnswer(q_id: string, key: string) {
-    let index = this.answers.findIndex((ans) => ans.questionId === q_id);
-    if (index == -1) {
-      this.answers.push({ questionId: q_id, correct: key });
-      sessionStorage.setItem('answers', JSON.stringify(this.answers));
-    } else {
-      this.answers[index].correct = key;
-      sessionStorage.setItem('answers', JSON.stringify(this.answers));
-    }
-  }
+  // selectAnswer(q_id: string, key: string) {
+  //   let index = this.answers.findIndex((ans) => ans.questionId === q_id);
+  //   if (index == -1) {
+  //     this.answers.push({ questionId: q_id, correct: key });
+  //     sessionStorage.setItem('answers', JSON.stringify(this.answers));
+  //   } else {
+  //     this.answers[index].correct = key;
+  //     sessionStorage.setItem('answers', JSON.stringify(this.answers));
+  //   }
+  // }
 
-  isSelected(q_id: string, key: string): boolean {
-    return this.answers.some(answer => answer.questionId === q_id && answer.correct === key);
-  }
+  // isSelected(q_id: string, key: string): boolean {
+  //   return this.answers.some(answer => answer.questionId === q_id && answer.correct === key);
+  // }
 
-  check(q_id: string): boolean {
-    return this.answers.some(answer => answer.questionId === q_id);
-  }
+  // check(q_id: string): boolean {
+  //   return this.answers.some(answer => answer.questionId === q_id);
+  // }
 
-  answersMap(q_id: string): string {
-    // let index = this.answers.findIndex((q) => q.questionId == q_id);
-    // return this.answers[index].correct;
-    const answer = this.answers.find((q) => q.questionId === q_id);
-    return answer?.correct ?? '';
-  }
+  // answersMap(q_id: string): string {
+  //   // let index = this.answers.findIndex((q) => q.questionId == q_id);
+  //   // return this.answers[index].correct;
+  //   const answer = this.answers.find((q) => q.questionId === q_id);
+  //   return answer?.correct ?? '';
+  // }
 
-  nextQuestion() {
-    if (this.index < this.questionsOnExam.length - 1) {
-      this.index++;
-    } else {
-      this.index = 0;
-      this.submit();
-      this.showScore.update((value) => value = true);
-    }
-  }
-  previousQuestion() {
-    if (this.index > 0) {
-      this.index--;
-    }
-  }
+  // nextQuestion() {
+  //   if (this.index < this.questionsOnExam.length - 1) {
+  //     this.index++;
+  //   } else {
+  //     this.index = 0;
+  //     this.submit();
+  //     this.showScore.update((value) => value = true);
+  //   }
+  // }
+  // previousQuestion() {
+  //   if (this.index > 0) {
+  //     this.index--;
+  //   }
+  // }
 
-  submit() {
-    this.time = this.duration - this.minutes;
-    this.checkQuestionsID = this._QuestionService.checkQuestions({ answers: this.answers, time: this.time }).subscribe({
-      next: (res) => {
-        this.score = res;
-        this.initChart();
-      }
-    })
-  }
+  // submit() {
+  //   this.time = this.duration - this.minutes;
+  //   this.checkQuestionsID = this._QuestionService.checkQuestions({ answers: this.answers, time: this.time }).subscribe({
+  //     next: (res) => {
+  //       this.score = res;
+  //       this.initChart();
+  //     }
+  //   })
+  // }
 
-  showResults() {
-    this.showScore.update((value) => value = false)
-  }
+  // showResults() {
+  //   this.showScore.update((value) => value = false)
+  // }
 
-  initChart() {
-    if (!this.score) return;
-    this.doughnutChartData = {
-      datasets: [{
-        data: [this.score?.correct, this.score?.wrong],
-        backgroundColor: ['rgb(2, 54, 156)', 'rgb(204, 16, 16)'],
-        hoverOffset: 4
-      }],
-    };
-    this.doughnutChartType = 'doughnut';
-  }
+  // initChart() {
+  //   if (!this.score) return;
+  //   this.doughnutChartData = {
+  //     datasets: [{
+  //       data: [this.score?.correct, this.score?.wrong],
+  //       backgroundColor: ['rgb(2, 54, 156)', 'rgb(204, 16, 16)'],
+  //       hoverOffset: 4
+  //     }],
+  //   };
+  //   this.doughnutChartType = 'doughnut';
+  // }
 
-  close(){
-    this._QuestionService.closeModal.set(true)
-  }
+  // close(){
+  //   this._QuestionService.closeModal.set(true)
+  // }
 
-  ngOnDestroy(): void {
-    this.allQuestionsOnExamID?.unsubscribe();
-    this.checkQuestionsID?.unsubscribe();
-    sessionStorage.removeItem('answers');
-  }
+  // ngOnDestroy(): void {
+  //   this.allQuestionsOnExamID?.unsubscribe();
+  //   this.checkQuestionsID?.unsubscribe();
+  //   sessionStorage.removeItem('answers');
+  // }
 
 }

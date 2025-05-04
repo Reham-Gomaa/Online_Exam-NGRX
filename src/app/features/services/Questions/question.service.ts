@@ -3,7 +3,7 @@ import { QuestionApi } from '../../base/Questions/questions.abstract';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { QuestionEndpoint } from '../../enums/Question/question.endpoints';
-import { IQuestionsOnExamAdaptorRes } from '../../interfaces/Questions/iquestions-on-exam-res';
+import { IQuestionsOnExamAdaptorRes, IQuestionsOnExamRes, QuestionsAdaptRes } from '../../interfaces/Questions/iquestions-on-exam-res';
 import { QuestionOnExamAdaptorService } from '../../adaptors/Questions/question-on-exam-adaptor.service';
 import { Base_Url } from '../../../../../projects/auth-api/src/public-api';
 import { CheckQuestionInterface, ScoreAdaptorRes } from '../../interfaces/Questions/check-question-interface';
@@ -22,9 +22,9 @@ export class QuestionService implements QuestionApi {
   private readonly _QuestionOnExamAdaptorService = inject(QuestionOnExamAdaptorService);
   private readonly _CheckQuestionAdaptorService = inject(CheckQuestionAdaptorService);
 
-  getAllQuestionsOnExam(e_id:string):Observable<IQuestionsOnExamAdaptorRes> {
-    return this._HttpClient.get( this._Base_Url + QuestionEndpoint.GET_ALL_QUESTIONS_ON_EXAM + e_id ).pipe(
-      map( (res:any)=> this._QuestionOnExamAdaptorService.adapt(res) )
+  getAllQuestionsOnExam(e_id:string):Observable<QuestionsAdaptRes> {
+    return this._HttpClient.get<IQuestionsOnExamRes>( this._Base_Url + QuestionEndpoint.GET_ALL_QUESTIONS_ON_EXAM + e_id ).pipe(
+      map( (res:IQuestionsOnExamRes)=> this._QuestionOnExamAdaptorService.adapt(res) )
     )
   }
 

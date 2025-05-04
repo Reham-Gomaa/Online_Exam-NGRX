@@ -5,7 +5,6 @@
   "compilerOptions": {
     "paths": {
       "auth-api": ["./projects/auth-api/src/public-api.ts"],
-      "@token/*":["./src/app/store/token/*"]
     },
     "outDir": "./out-tsc/app",
     "types": [

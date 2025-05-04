@@ -42,5 +42,21 @@ export interface IQuestionsOnExamAdaptorRes {
     questions: Question[]
   }
 
+  //-------------------------------------------------------------
+  
+export interface QuestionsAdaptRes {
+    questions: QuestionAdapt[]
+  }
+  
+export interface QuestionAdapt {
+    question: string,
+    answer: Answer[],
+    id: string,
+    index:number,
+    correct: string,
+    selectedAnswer?: string,
+    exam: Exam
+  }
+
 
 

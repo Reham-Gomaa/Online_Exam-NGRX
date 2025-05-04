@@ -1,4 +1,4 @@
-export type examState = 'not started' | 'started' | 'score' | 'results' | 'closed'
+export type examState = 'instructions' | 'started' | 'get score' | 'results' | 'closed'
 
 export interface ExamStates {
     state:examState,

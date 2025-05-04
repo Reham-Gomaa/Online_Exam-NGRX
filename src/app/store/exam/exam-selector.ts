@@ -7,3 +7,8 @@ export const selectExamModal = createSelector(
     selectExamState,
     (state)=> state.isExamOpen
 );
+
+export const selectStatus = createSelector(
+    selectExamState,
+    (state)=> state.state
+)
