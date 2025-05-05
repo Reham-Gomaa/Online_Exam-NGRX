@@ -6,9 +6,6 @@
                         Question {{currentQuestion.index+1}} of {{numberOfQuestions}}
                     </span>
                     <div class="w-[6.125rem] px-1 flex justify-center items-center">
-                        <!-- <div class="w-6 h-[1.875rem] align-middle">
-                            <img src="./images/clock.png" alt="clock">
-                        </div> -->
                         <span class="font-normal text-xl/6 tracking-[.0313rem] align-middle text-center"
                             [class]="minutes > 2 ? 'success-color' : 'text-red-500'">
                             {{ minutes }} : {{ seconds }}
@@ -24,7 +21,7 @@
                 </div>
     
             </div>
-            <div class="grid gap-6 ">
+            <div class="grid gap-6" [@quiz]="getQuestionDirection()">
                 <h3 class="font-medium text-lg md:text-2xl">{{currentQuestion.question}}</h3>
                 <div class="grid gap-4">
                     <form [formGroup]="quizForm">

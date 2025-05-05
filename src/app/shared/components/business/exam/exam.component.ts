@@ -5,18 +5,43 @@ import { Store } from '@ngrx/store';
 import { QuestionAdapt } from '../../../../features/interfaces/Questions/iquestions-on-exam-res';
 import { onBack, onNext, setSelectedAnswer, setWrongQuestions } from '../../../../store/questions/question-actions';
 import { selectCurrentQuestion, selectNumberOfQuestions } from '../../../../store/questions/question-selector';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-exam',
   imports: [ReactiveFormsModule],
   templateUrl: './exam.component.html',
-  styleUrls: ['./exam.component.scss']
+  styleUrls: ['./exam.component.scss'],
+  animations:[
+    trigger( "quiz" ,[
+      state( '*' , style({
+        opacity: '1',
+        transform: 'translateX(0px)'
+      }) ),
+      transition((fromState , toState)=> toState.startsWith('next'),[
+        style({
+          opacity: '0',
+          transform: 'translateX(100px)'
+        }),
+        animate(300)
+      ]),
+      transition((fromState , toState)=> toState.startsWith('back'),[
+        style({
+          opacity: '0',
+          transform: 'translateX(-100px)'
+        }),
+        animate(300)
+      ])
+    ] 
+      
+     )
+  ]
 })
 export class ExamComponent implements OnInit , OnDestroy {
   private readonly _Store = inject(Store);
 
+  direction !: 'back' | 'next';
   currentQuestion: QuestionAdapt = {} as QuestionAdapt;
-  //examDuration :number = 0;
   minutes !: number;
   seconds !:number;
   timerId !:NodeJS.Timeout;
@@ -27,7 +52,12 @@ export class ExamComponent implements OnInit , OnDestroy {
   selectCurrentQId!:Subscription;
   selectNumOfQId!:Subscription;
 
+  getQuestionDirection():string{
+    return `${this.direction}-${this.currentQuestion.index}` ;
+  }
+
   onNext() {
+    this.direction = 'next';
     const selectedValue = this.quizForm.get('selectedAnswer')?.value;
     this._Store.dispatch(setSelectedAnswer({ qId: this.currentQuestion.id, selectedAnswer: selectedValue }));
     if (this.currentQuestion.index == this.numberOfQuestions - 1) {
@@ -47,6 +77,7 @@ export class ExamComponent implements OnInit , OnDestroy {
   }
 
   onBack() {
+    this.direction = 'back';
     this.enableNextBtn();
     this._Store.dispatch(onBack({ index: this.currentQuestion.index }));
     if (this.currentQuestion.index == 0) {
@@ -95,6 +126,7 @@ export class ExamComponent implements OnInit , OnDestroy {
         this.seconds = this.seconds -1;
       }
       if(this.minutes == 0){
+        clearInterval(this.timerId);
         this._Store.dispatch(setWrongQuestions());
       }
     },1000)
@@ -124,7 +156,6 @@ export class ExamComponent implements OnInit , OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.timerId);
     this.quizForm.reset();
     this.selectCurrentQId?.unsubscribe();
     this.selectNumOfQId?.unsubscribe();
