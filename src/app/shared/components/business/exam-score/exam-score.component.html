@@ -1,1 +1,11 @@
-<p>exam-score works!</p>
+<h2 class="font-medium text-2xl">Your score</h2>
+    <div class="w-2/3 h-[300px] mx-auto my-6">
+        <canvas baseChart [data]="doughnutChartData" [type]="doughnutChartType" class="mx-auto">
+        </canvas>
+    </div>
+    <div class="grid grid-cols-2 gap-5">
+            <app-close-modal-btn></app-close-modal-btn>
+        @if (numOfWrong > 0) {
+            <button (click)="showResults()" class="w-1/2 h-11 rounded-full main-bg text-white block mx-auto">Show results</button>
+        }
+    </div>

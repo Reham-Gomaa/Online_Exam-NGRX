@@ -17,6 +17,7 @@ import { questionReducer } from './store/questions/question-reducer';
 import { tokenReducer } from './store/token/token.reducer';
 import { provideEffects } from '@ngrx/effects';
 import { QuestionsEffects } from './store/questions/question-effetc';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 
 
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(BrowserAnimationsModule , NgxSpinnerModule),
     provideToastr(),
     { provide: Base_Url , useValue: `https://exam.elevateegy.com/api/v1` },
-    provideAnimations()
+    provideAnimations(),
+    provideCharts(withDefaultRegisterables())
 ]
 };

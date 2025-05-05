@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { QuestionAdapt } from '../../../../features/interfaces/Questions/iquestions-on-exam-res';
@@ -11,14 +12,20 @@ import { selectCurrentQuestion, selectNumberOfQuestions } from '../../../../stor
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss']
 })
-export class ExamComponent implements OnInit {
+export class ExamComponent implements OnInit , OnDestroy {
   private readonly _Store = inject(Store);
 
   currentQuestion: QuestionAdapt = {} as QuestionAdapt;
+  //examDuration :number = 0;
+  minutes !: number;
+  seconds !:number;
+  timerId !:NodeJS.Timeout;
   numberOfQuestions !: number;
   quizForm !: FormGroup;
   isNextBtnDisabled: boolean = true;
   isBackBtnDisabled: boolean = true;
+  selectCurrentQId!:Subscription;
+  selectNumOfQId!:Subscription;
 
   onNext() {
     const selectedValue = this.quizForm.get('selectedAnswer')?.value;
@@ -79,16 +86,33 @@ export class ExamComponent implements OnInit {
     return num ? [...Array(num).keys()] : [];
   }
 
+  setTimer(){
+    this.timerId = setInterval(()=>{
+      if(this.seconds == 0){
+        this.minutes = this.minutes -1;
+        this.seconds = 59;
+      }else{
+        this.seconds = this.seconds -1;
+      }
+      if(this.minutes == 0){
+        this._Store.dispatch(setWrongQuestions());
+      }
+    },1000)
+  }
+
   getNumberOfQuestions() {
-    this._Store.select(selectNumberOfQuestions).subscribe({
+    this.selectNumOfQId = this._Store.select(selectNumberOfQuestions).subscribe({
       next: (num) => { this.numberOfQuestions = num }
     })
   }
 
   getCurrentQuestion() {
-    this._Store.select(selectCurrentQuestion).subscribe({
+    this.selectCurrentQId = this._Store.select(selectCurrentQuestion).subscribe({
       next: (question) => {
-        this.currentQuestion = question;
+        this.currentQuestion = question ;
+        this.minutes = question.exam.duration;
+        this.seconds = 0;
+        this.setTimer();
       }
     })
   }
@@ -97,6 +121,13 @@ export class ExamComponent implements OnInit {
     this.initForm();
     this.getCurrentQuestion();
     this.getNumberOfQuestions();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.timerId);
+    this.quizForm.reset();
+    this.selectCurrentQId?.unsubscribe();
+    this.selectNumOfQId?.unsubscribe();
   }
 
 }

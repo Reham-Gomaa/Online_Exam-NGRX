@@ -16,10 +16,11 @@ import { questionsSelector } from '../../../store/questions/question-selector';
 import { examState } from '../../../store/exam/exam-states';
 import { ExamComponent } from "../../../shared/components/business/exam/exam.component";
 import { ExamScoreComponent } from "../../../shared/components/business/exam-score/exam-score.component";
+import { ExamResultsComponent } from "../../../shared/components/business/exam-results/exam-results.component";
 
 @Component({
   selector: 'app-diploma',
-  imports: [ExamModalSkeletonComponent, AsyncPipe, ExamComponent, ExamScoreComponent],
+  imports: [ExamModalSkeletonComponent, AsyncPipe, ExamComponent, ExamScoreComponent, ExamResultsComponent],
   templateUrl: './diploma.component.html',
   styleUrls: ['./diploma.component.scss']
 })

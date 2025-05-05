@@ -1,0 +1,16 @@
+$input : #EDEFF3;
+$bg-correct: #CAF9CC;
+$bg-wrong: #F8D2D2;
+
+.bg-correct{
+    background: $bg-correct;
+}
+.bg-wrong{
+    background: $bg-wrong;
+}
+.input-bg{
+    background-color: $input;
+}
+.myShadow{
+    box-shadow: 0px 1px 10px 0px #00000040;
+}

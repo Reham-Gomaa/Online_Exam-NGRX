@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { ExamStates } from "./exam-states";
-import { toggleModal, updateStatus } from "./exam-actions";
+import { resetExamState, toggleModal, updateStatus } from "./exam-actions";
 
 export const initialState :ExamStates = {
     state: 'instructions',
@@ -18,5 +18,7 @@ export const examReducer = createReducer(
     on(updateStatus , (state , status)=>({
         ...state,
         state: status.state
-    }))
+    })),
+
+    on(resetExamState , ()=> initialState),
 )

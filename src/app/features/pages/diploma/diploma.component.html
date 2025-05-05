@@ -36,12 +36,13 @@
                 </ul>
             </div>
             <button type="button" (click)="startExam()"
-                class="text-white main-bg hover:bg-blue-800 font-medium text-base align-middle text-center  h-12 rounded-full">
+                class="block w-1/3 mx-auto text-white main-bg hover:bg-blue-800 font-medium text-base align-middle text-center  h-12 rounded-full">
                 start</button>
         </div>
         }
-        @case ("started") { <app-exam></app-exam> }
-        @case ("get score") { <app-exam-score></app-exam-score> }
+        @case ("started") {<app-exam></app-exam>}
+        @case ("get score") {<app-exam-score></app-exam-score>}
+        @case ("results") {<app-exam-results></app-exam-results>}
         }
     </app-exam-modal-skeleton>
     }

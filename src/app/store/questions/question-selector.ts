@@ -17,3 +17,13 @@ export const selectCurrentQuestion = createSelector(
     questionStateSelector,
     (state)=> state.currentQuestion
 );
+
+export const selectNumOfWrong = createSelector(
+    questionStateSelector,
+    (state)=> state.numberOfWrongQuestions
+);
+
+export const selectWrongQuestions = createSelector(
+    questionStateSelector,
+    (state)=> state.wrongQuestions
+)
