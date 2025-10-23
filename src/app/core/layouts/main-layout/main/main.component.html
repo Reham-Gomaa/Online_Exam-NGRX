@@ -1,50 +1,76 @@
 <section class="py-10 px-8">
-        <div class="max-lg:flex-col flex justify-between">
-            <div class="lg:hidden p-2">
-                <app-sidebar></app-sidebar>
-            </div>
+  <div class="max-lg:flex-col flex justify-between">
+    <div class="lg:hidden p-2">
+      <app-sidebar />
+    </div>
 
-            <div class="hidden lg:w-1/6 p-2 h-[19.4375rem] lg:grid gap-14">
-                <div class="w-[9.4375rem] h-[1.8125rem]">
-                    <img src="./images/Final Logo 1.png" alt="elevate logo">
-                </div>
-                <div class="xl:w-[175px] h-[124px] flex flex-col justify-between">
-                    <app-sidebar-button [link]="'/dashboard'" [text]="'Dashbord'" >
-                        <img [src]="currentUrl.includes('dashboard') ? './images/activeVector.png' : './images/Vector.png' " alt="vector">
-                    </app-sidebar-button>
-                    <app-sidebar-button [link]="'/history'" [text]="'Quiz History'" >
-                        <img [src]="currentUrl.includes('history') ? './images/active_twotone-history.png' : './images/ic_twotone-history.png' " alt="history">
-                    </app-sidebar-button>
-                </div>
-                <button (click)="logOut()" class="py-2 px-1 grid gap-8 relative">
-                    <div class="w-[1.5625rem] h-[1.5625rem] absolute top-[.6563rem] start-[.6563rem]">
-                        <img src="./images/Vector (1).png" alt="log out icon">
-                    </div>
-                    <span class="btnspan history">Log Out</span>
-                </button>
-            </div>
+    <div class="hidden lg:w-1/6 mx-auto p-3 h-[19.4375rem] lg:grid gap-14">
+      <div class="lg:w-[7.5rem] xl:w-[9.4375rem] h-[1.8125rem]">
+        <img src="./images/Final Logo 1.png" alt="elevate logo" />
+      </div>
+      <div class="w-full h-[124px] grid gap-8">
+        <app-sidebar-button
+          class="w-full"
+          [link]="'/dashboard'"
+          [text]="'Dashbord'"
+        >
+          <img
+            [src]="
+              currentUrl.includes('dashboard')
+                ? './images/activeVector.png'
+                : './images/Vector.png'
+            "
+            alt="vector"
+          />
+        </app-sidebar-button>
+        <app-sidebar-button [link]="'/history'" [text]="'Quiz History'">
+          <img
+            [src]="
+              currentUrl.includes('history')
+                ? './images/active_twotone-history.png'
+                : './images/ic_twotone-history.png'
+            "
+            alt="history"
+          />
+        </app-sidebar-button>
+      </div>
+      <app-sidebar-button [action]="logOut" [text]="'Log Out'">
+        <img src="./images/Vector (1).png" alt="log out icon" />
+      </app-sidebar-button>
+    </div>
 
-            <div class=" lg:w-5/6">
-                <div class="hidden lg:flex justify-between items-center p-2">
-                    <div class=" relative   ">
-                        <input type="text"
-                            class="lg:w-[31.25rem] xl:w-[47rem] ps-11 p-4 rounded-[1.25rem] font-normal text-[1.1875rem] align-middle history"
-                            placeholder="Search Quiz">
-                        <div class="w-[1.5625rem] h-[1.5625rem] absolute top-[1.125rem] start-[1.125rem]">
-                            <img src="./images/search.png" alt="search icon">
-                        </div>
-                    </div>
-                    <button
-                        class="w-[11.9375rem] h-[3.8125rem] rounded-[1.25rem] py-4 px-8   main-bg span text-white">Start
-                        Quiz</button>
-                    <div class="user w-[3.8125rem] h-[3.8125rem] rounded-full">
-                        <img class="rounded-full" src="./images/admin.png" alt="">
-                    </div>
-
-                </div>
-                <div class=" mt-10 router">
-                        <router-outlet />
-                </div>
-            </div>
+    <div class="lg:w-5/6">
+      <div class="hidden lg:flex py-2 px-4">
+        <div class="relative lg:w-1/2 xl:w-3/4">
+          <input
+            type="text"
+            class="w-full ps-11 p-4 rounded-[1.25rem] font-normal text-[1.1875rem] align-middle history"
+            placeholder="Search Quiz"
+          />
+          <div
+            class="w-[1.5625rem] h-[1.5625rem] absolute top-[1.125rem] start-[1.125rem]"
+          >
+            <img src="./images/search.png" alt="search icon" />
+          </div>
         </div>
+        <div class="lg:w-1/2 xl:w-1/4 flex justify-evenly items-center">
+          <button
+            class="rounded-[1.25rem] lg:py-4 lg:px-8 main-bg span text-white"
+          >
+            Start Quiz
+          </button>
+          <div class="user rounded-full">
+            <img
+              class="rounded-full w-[3.8125rem] h-[3.8125rem]"
+              src="./images/admin.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 router">
+        <router-outlet />
+      </div>
+    </div>
+  </div>
 </section>

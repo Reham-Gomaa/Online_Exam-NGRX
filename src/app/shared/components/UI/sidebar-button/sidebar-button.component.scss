@@ -1,19 +1,19 @@
-$history: #696F79;
+$history: #696f79;
 
-.text-white{
-    color: white !important;
+.text-white {
+  color: white !important;
 }
-.history{
-    color:$history;
-}
-
-.btnspan{
-    @apply font-semibold lg:text-xl align-middle;
-}
-.side-button-style{
-    @apply h-[2.875rem] flex justify-between items-center  p-2;
+.history {
+  color: $history;
 }
 
-.img-style{
-    @apply w-6 h-6 ;
+button {
+  @apply font-semibold lg:text-xs xl:text-lg text-start;
+}
+.side-button-style {
+  @apply grid grid-cols-3 p-2 w-full items-center text-start;
+}
+
+.img-style {
+  @apply w-6 h-6 col-span-1;
 }

@@ -5,7 +5,6 @@ import { ExamModalSkeletonComponent } from '../../../shared/components/UI/exam-m
 import { Exam } from '../../interfaces/Exams/iexam-on-subject-res';
 import { ExamsService } from '../../services/Exams/exams.service';
 import { QuestionService } from '../../services/Questions/question.service';
-import { ExamModalComponent } from "../exam-modal/exam-modal.component";
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { toggleModal } from '../../../store/exam/exam-actions';

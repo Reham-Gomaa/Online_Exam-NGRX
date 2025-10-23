@@ -1,8 +1,12 @@
-<button [routerLink]="link()" routerLinkActive="main-bg text-white rounded-[.625rem]" class="history side-button-style">
-    <div class="img-style">
-        <ng-content></ng-content>
-    </div>
-    <div>
-        <span class="btnspan ">{{text()}}</span>
-    </div>
+<button
+  [routerLink]="link() || null"
+  routerLinkActive="main-bg text-white rounded-[.625rem]"
+  class="history side-button-style"
+  [class.cursor-pointer]="action || link"
+  (click)="action?.()"
+>
+  <div class="img-style">
+    <ng-content />
+  </div>
+  <span class="col-span-2">{{ text() }}</span>
 </button>
