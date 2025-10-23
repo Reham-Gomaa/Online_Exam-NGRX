@@ -1,29 +1,64 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { SidebarButtonComponent } from "../../../shared/components/UI/sidebar-button/sidebar-button.component";
+import { Component, inject } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { SidebarButtonComponent } from '../../../shared/components/UI/sidebar-button/sidebar-button.component';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
   imports: [SidebarButtonComponent],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-    private readonly _Router = inject(Router);
+  private readonly _Router = inject(Router);
+  routerEventID!: Subscription;
+  currentUrl = '';
+  isSidebarOpen = false;
+  isSearchOpen = false;
 
-    currentUrl: string = '';
-
-    ngOnInit(): void {
-      this._Router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          this.currentUrl = event.urlAfterRedirects;
-        }
+  ngOnInit(): void {
+    this.currentUrl = this._Router.url;
+    this.routerEventID = this._Router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe((event) => {
+        this.currentUrl = event.urlAfterRedirects;
+        this.closeAll();
       });
-    }    
-    logOut(){
-      sessionStorage.clear()
-      //this._Store.select('token')
-      this._Router.navigate(['/signin']);
-    }
+  }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    document.body.classList.toggle('overflow-hidden', this.isSidebarOpen);
+  }
+
+  toggleSearch() {
+    this.isSearchOpen = !this.isSearchOpen;
+    document.body.classList.toggle('overflow-hidden', this.isSearchOpen);
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  closeSearch() {
+    this.isSearchOpen = false;
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  closeAll() {
+    this.isSidebarOpen = false;
+    this.isSearchOpen = false;
+    document.body.classList.remove('overflow-hidden');
+  }
+
+  logOut() {
+    sessionStorage.clear();
+    this.closeAll();
+    this._Router.navigate(['/signin']);
+  }
+
+  ngOnDestroy() {
+    this.routerEventID?.unsubscribe();
+  }
 }

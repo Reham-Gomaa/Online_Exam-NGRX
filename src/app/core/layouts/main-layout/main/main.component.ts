@@ -33,12 +33,6 @@ export class MainComponent implements OnInit, OnDestroy {
     this._Router.navigate(['/signin']);
   };
 
-  // logOut(){
-  //   sessionStorage.clear()
-  //   //this._Store.select('token')
-  //   this._Router.navigate(['/signin']);
-  // }
-
   ngOnDestroy(): void {
     this.routerEventID?.unsubscribe();
   }

@@ -3,7 +3,7 @@
   routerLinkActive="main-bg text-white rounded-[.625rem]"
   class="history side-button-style"
   [class.cursor-pointer]="action || link"
-  (click)="action?.()"
+  (click)="handleClick()"
 >
   <div class="img-style">
     <ng-content />
